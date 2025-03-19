@@ -19,6 +19,7 @@ export default {
       fromCurrency: baseCurrency,
       exchangeRates: {},
       availableCurrencies: availableCurrencies,
+      apiUrl: import.meta.env.VITE_EXCHANGE_API_URL, // Load API URL from env file
     }
   },
   async mounted() {
@@ -27,9 +28,7 @@ export default {
   methods: {
     async fetchExchangeRates() {
       try {
-        const response = await axios.get(
-          `https://api.exchangerate-api.com/v4/latest/${this.baseCurrency}`,
-        )
+        const response = await axios.get(`${this.apiUrl}${this.baseCurrency}`)
         this.exchangeRates = response.data.rates
       } catch (error) {
         console.error('Error fetching exchange rates:', error)
